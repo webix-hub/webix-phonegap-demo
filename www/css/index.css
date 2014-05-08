@@ -45,6 +45,19 @@ body {
     width:100%;
 }
 
+h4{
+    background: #65A0FF;
+    border-radius: 10px;
+    width: 150px;
+    text-align: center;
+    padding: 5px;
+    color: #FFF;
+    font-size: 12px;
+}
+p{
+    text-transform: none
+}
+
 /* Portrait layout (default) */
 .app {
     background:url(../img/logo.png) no-repeat center top; /* 170px x 200px */

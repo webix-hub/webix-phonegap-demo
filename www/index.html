@@ -34,33 +34,46 @@
         <script type="text/javascript" src="js/index.js"></script>
 
         <script type="text/javascript">
+            function handleBack(){
+                if (!$$("list").isVisible()){
+                    $$("list").show();
+                    $$("mainbar").showBatch("main");
+                }
+            }
+
             document.addEventListener("deviceready", function(){
-                document.addEventListener("backbutton", function(){
-                    if (!$$("list").isVisible())
-                        $$("list").show();
-                }, false);
+                document.addEventListener("backbutton", handleBack, false);
             }, false);
             app.initialize();
         </script>
 
         <script type="text/javascript">
         webix.ready(function(){
-            var toolbar = { view:"toolbar",
+            var toolbar = { 
+                view:"toolbar",
+                id:"mainbar",
+
+                visibleBatch:"main",
                 elements:[
                     { view:"search", value:"", on:{
                         onTimedKeyPress:function(){
                             $$('list').filter("firstname", this.getValue());
                         }
-                    }}
+                    }, batch:"main" },
+                    { view:"button", value:"Back", width:150, batch:"details", click: handleBack}
                 ]
             };
 
             var list = { 
-                view:"list", id:"list", 
+                view:"unitlist", id:"list", 
+                uniteBy:function(obj){
+                    return obj.lastname.substr(0,1);
+                },
                 template:"html->item_list",
-                url:"contacts.json",
+                url:"contacts.json?1",
                 on:{
                     onItemClick:function(id){
+                        $$("mainbar").showBatch("details");
                         $$('details').show();
                         $$('details').setValues(this.getItem(id));
                     }
